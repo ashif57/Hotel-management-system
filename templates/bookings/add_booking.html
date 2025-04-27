@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Booking - Hotel Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        h2 {
+            font-size: 2rem;
+            color: #007BFF;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        select:focus, input:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🏨 Hotel Management System</h1>
+    </header>
+
+    <div class="form-container">
+        <h2>Add New Booking</h2>
+        <form method="POST">
+            <label for="guest_id">Guest:</label>
+            <select id="guest_id" name="guest_id" required>
+                {% for guest in guests %}
+                <option value="{{ guest.id }}">{{ guest.name }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label for="room_id">Room:</label>
+            <select id="room_id" name="room_id" required>
+                {% for room in rooms %}
+                <option value="{{ room.id }}">Room {{ room.id }} ({{ room.room_type }})</option>
+                {% endfor %}
+            </select><br>
+
+            <label for="check_in">Check-in Date:</label>
+            <input type="date" id="check_in" name="check_in" required><br>
+
+            <label for="check_out">Check-out Date:</label>
+            <input type="date" id="check_out" name="check_out" required><br>
+
+            <button type="submit">Book Room</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Hotel Management System | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>

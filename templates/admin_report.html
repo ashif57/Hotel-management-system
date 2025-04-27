@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f2f2f2;
+        }
+        h2 {
+            color: #007BFF;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>📊 Hotel Management System - Admin Report</h2>
+    <p><strong>Total Rooms:</strong> {{ total_rooms }}</p>
+    <p><strong>Total Guests:</strong> {{ total_guests }}</p>
+    <p><strong>Total Bookings:</strong> {{ total_bookings }}</p>
+    <p><strong>Total Payments Received:</strong> ₹{{ total_payments }}</p>
+
+    <h3>🗂 Recent Bookings</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Guest ID</th>
+            <th>Room ID</th>
+            <th>Check-in</th>
+            <th>Check-out</th>
+            <th>Status</th>
+        </tr>
+        {% for booking in recent_bookings %}
+        <tr>
+            <td>{{ booking.id }}</td>
+            <td>{{ booking.guest_id }}</td>
+            <td>{{ booking.room_id }}</td>
+            <td>{{ booking.check_in }}</td>
+            <td>{{ booking.check_out }}</td>
+            <td>{{ booking.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

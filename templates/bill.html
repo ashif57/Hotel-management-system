@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Bill</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        h2 { text-align: center; }
+        .bill-box { border: 1px solid #ccc; padding: 20px; max-width: 600px; margin: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        .total { font-weight: bold; background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <div class="bill-box">
+        <h2>Hotel Booking Bill</h2>
+        <p><strong>Guest:</strong> {{ guest.name }}</p>
+        <p><strong>Room:</strong> {{ room.room_number }} ({{ room.room_type }})</p>
+        <p><strong>Check-in:</strong> {{ booking.checkin_date }}</p>
+        <p><strong>Check-out:</strong> {{ booking.checkout_date }}</p>
+        <p><strong>Number of nights:</strong> {{ num_nights }}</p>
+
+        <table>
+            <tr>
+                <th>Description</th>
+                <th>Rate</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            <tr>
+                <td>Room Charge</td>
+                <td>${{ room.price_per_night }}</td>
+                <td>{{ num_nights }}</td>
+                <td>${{ total_cost }}</td>
+            </tr>
+            <tr class="total">
+                <td colspan="3">Grand Total</td>
+                <td>${{ total_cost }}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
