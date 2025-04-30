@@ -50,7 +50,7 @@
         tr:nth-child(even) td {
             background-color: #f4f4f9;
         }
-        a {
+        a.button {
             display: inline-block;
             background-color: #007BFF;
             color: white;
@@ -61,9 +61,33 @@
             margin-bottom: 20px;
             transition: background-color 0.3s;
         }
-        a:hover {
+        a.button:hover {
             background-color: #0056b3;
         }
+
+        /* 🔴 Cancel button special style */
+        .cancel-btn {
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .cancel-btn:hover {
+            background-color: #c82333;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: gray;
+            color: white;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
         footer {
             background-color: #343a40;
             color: white;
@@ -83,7 +107,7 @@
 
     <div class="container">
         <h2>All Bookings</h2>
-        <a href="{{ url_for('booking.add_booking') }}">Add New Booking</a>
+        <a href="{{ url_for('booking.add_booking') }}" class="button">Add New Booking</a>
 
         <table>
             <thead>
@@ -94,6 +118,7 @@
                     <th>Check-In</th>
                     <th>Check-Out</th>
                     <th>Status</th>
+                    <th>Action</th> <!-- Added Action heading -->
                 </tr>
             </thead>
             <tbody>
@@ -105,6 +130,13 @@
                     <td>{{ booking.check_in }}</td>
                     <td>{{ booking.check_out }}</td>
                     <td>{{ booking.status }}</td>
+                    <td>
+                        {% if booking.status != 'Cancelled' %}
+                        <a href="{{ url_for('booking.cancel_booking', booking_id=booking.id) }}" class="cancel-btn" onclick="return confirm('Are you sure you want to cancel this booking?');">Cancel</a>
+                        {% else %}
+                        <span class="badge">Cancelled</span>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
