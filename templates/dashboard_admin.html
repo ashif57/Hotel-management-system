@@ -1,93 +1,284 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Staff Dashboard - Hotel Management System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #007BFF;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-        }
-        h1 {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-        .dashboard-container {
-            max-width: 600px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #007BFF;
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            margin: 15px 0;
-        }
-        a {
-            display: block;
-            text-decoration: none;
-            background-color: #007BFF;
-            color: white;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
-        a:hover {
-            background-color: #0056b3;
-        }
-        footer {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
 
-<header>
-    <h1>🏨 Hotel Management System</h1>
-</header>
+{% block title %}Admin Dashboard - Hotel Management System{% endblock %}
 
-<div class="dashboard-container">
-    <h2>Welcome, {{ user.name }} (Admin)</h2>
-    <ul>
-        <li><a href="{{ url_for('room.rooms') }}">🛏️ Rooms</a></li>
-        <li><a href="{{ url_for('guest.guests') }}">👤 Guests</a></li>
-        <li><a href="{{ url_for('booking.bookings') }}">📅 Bookings</a></li>
-        <li><a href="{{ url_for('payment.payments') }}">💳 Payments</a></li>
-        <li><a href="{{ url_for('admin_report') }}">📄 Generate Report</a></li>
-        <li><a href="{{ url_for('logout') }}">🚪 Logout</a></li>
-    </ul>
+{% block subtitle %}Administrator Control Panel{% endblock %}
+
+{% block breadcrumb %}
+<span class="breadcrumb-separator"><i class="fas fa-chevron-right"></i></span>
+<span>Admin Dashboard</span>
+{% endblock %}
+
+{% block content %}
+<!-- Welcome Section -->
+<div class="card mb-4">
+    <div class="card-body" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white; border-radius: var(--border-radius-lg);">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h2 style="font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-user-shield"></i> Welcome, {{ user.name }}
+                </h2>
+                <p style="font-size: 1.125rem; opacity: 0.9; margin: 0;">
+                    Administrator Dashboard - Full System Access
+                </p>
+            </div>
+            <div style="text-align: right;">
+                <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: var(--border-radius); backdrop-filter: blur(10px);">
+                    <p style="margin: 0; font-size: 0.875rem; opacity: 0.8;">Current Time</p>
+                    <p style="margin: 0; font-size: 1.25rem; font-weight: 600;" id="currentTime"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<footer>
-    <p>&copy; 2025 Hotel Management System | All Rights Reserved</p>
-</footer>
+<!-- Admin Stats Overview -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+    <div class="card">
+        <div class="card-body text-center">
+            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <i class="fas fa-bed" style="font-size: 1.25rem; color: white;"></i>
+            </div>
+            <h4 style="font-size: 1rem; font-weight: 600; color: var(--gray-800); margin-bottom: 0.25rem;">Total Rooms</h4>
+            <p style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin: 0;">25</p>
+        </div>
+    </div>
 
-</body>
-</html>
+    <div class="card">
+        <div class="card-body text-center">
+            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--success-color), #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <i class="fas fa-users" style="font-size: 1.25rem; color: white;"></i>
+            </div>
+            <h4 style="font-size: 1rem; font-weight: 600; color: var(--gray-800); margin-bottom: 0.25rem;">Active Guests</h4>
+            <p style="font-size: 1.5rem; font-weight: 700; color: var(--success-color); margin: 0;">18</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body text-center">
+            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--warning-color), #d97706); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <i class="fas fa-calendar-check" style="font-size: 1.25rem; color: white;"></i>
+            </div>
+            <h4 style="font-size: 1rem; font-weight: 600; color: var(--gray-800); margin-bottom: 0.25rem;">Today's Bookings</h4>
+            <p style="font-size: 1.5rem; font-weight: 700; color: var(--warning-color); margin: 0;">7</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body text-center">
+            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--info-color), #0891b2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <i class="fas fa-rupee-sign" style="font-size: 1.25rem; color: white;"></i>
+            </div>
+            <h4 style="font-size: 1rem; font-weight: 600; color: var(--gray-800); margin-bottom: 0.25rem;">Today's Revenue</h4>
+            <p style="font-size: 1.5rem; font-weight: 700; color: var(--info-color); margin: 0;">₹45K</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Navigation Cards -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+    <div class="card">
+        <div class="card-header" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); color: white;">
+            <h3 class="card-title" style="color: white; margin: 0;">
+                <i class="fas fa-bed"></i> Room Management
+            </h3>
+        </div>
+        <div class="card-body">
+            <p style="color: var(--gray-600); margin-bottom: 1.5rem;">
+                Manage room inventory, pricing, and availability across all room types.
+            </p>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="{{ url_for('room.rooms') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-list"></i> View All Rooms
+                </a>
+                <a href="{{ url_for('room.add_room') }}" class="btn btn-outline btn-sm">
+                    <i class="fas fa-plus"></i> Add Room
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" style="background: linear-gradient(135deg, var(--success-color), #059669); color: white;">
+            <h3 class="card-title" style="color: white; margin: 0;">
+                <i class="fas fa-users"></i> Guest Management
+            </h3>
+        </div>
+        <div class="card-body">
+            <p style="color: var(--gray-600); margin-bottom: 1.5rem;">
+                Handle guest profiles, preferences, and maintain customer relationships.
+            </p>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="{{ url_for('guest.guests') }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-list"></i> View All Guests
+                </a>
+                <a href="{{ url_for('guest.add_guest') }}" class="btn btn-outline btn-sm">
+                    <i class="fas fa-user-plus"></i> Add Guest
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" style="background: linear-gradient(135deg, var(--warning-color), #d97706); color: white;">
+            <h3 class="card-title" style="color: white; margin: 0;">
+                <i class="fas fa-calendar-check"></i> Booking Management
+            </h3>
+        </div>
+        <div class="card-body">
+            <p style="color: var(--gray-600); margin-bottom: 1.5rem;">
+                Track reservations, check-ins, check-outs, and booking modifications.
+            </p>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="{{ url_for('booking.bookings') }}" class="btn btn-sm" style="background: var(--warning-color); color: white;">
+                    <i class="fas fa-list"></i> View Bookings
+                </a>
+                <a href="{{ url_for('booking.add_booking') }}" class="btn btn-outline btn-sm">
+                    <i class="fas fa-calendar-plus"></i> New Booking
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" style="background: linear-gradient(135deg, var(--info-color), #0891b2); color: white;">
+            <h3 class="card-title" style="color: white; margin: 0;">
+                <i class="fas fa-credit-card"></i> Payment Management
+            </h3>
+        </div>
+        <div class="card-body">
+            <p style="color: var(--gray-600); margin-bottom: 1.5rem;">
+                Process payments, generate bills, and manage financial transactions.
+            </p>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="{{ url_for('payment.payments') }}" class="btn btn-sm" style="background: var(--info-color); color: white;">
+                    <i class="fas fa-list"></i> View Payments
+                </a>
+                <a href="{{ url_for('payment.add_payment') }}" class="btn btn-outline btn-sm">
+                    <i class="fas fa-money-bill-wave"></i> Add Payment
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Tools -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-tools"></i> Administrative Tools
+        </h3>
+    </div>
+    <div class="card-body">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+            <a href="{{ url_for('admin_report') }}" class="btn btn-outline btn-lg">
+                <i class="fas fa-chart-bar"></i> Generate Reports
+            </a>
+            <button class="btn btn-outline btn-lg" onclick="showSystemInfo()">
+                <i class="fas fa-info-circle"></i> System Information
+            </button>
+            <button class="btn btn-outline btn-lg" onclick="exportData()">
+                <i class="fas fa-download"></i> Export Data
+            </button>
+            <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- System Status -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-server"></i> System Status
+        </h3>
+    </div>
+    <div class="card-body">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+            <div>
+                <h4 style="font-size: 1rem; font-weight: 600; color: var(--gray-700); margin-bottom: 1rem;">
+                    <i class="fas fa-database"></i> Database Status
+                </h4>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div style="width: 12px; height: 12px; background: var(--success-color); border-radius: 50%;"></div>
+                    <span style="color: var(--gray-600); font-size: 0.875rem;">Connected & Healthy</span>
+                </div>
+            </div>
+            
+            <div>
+                <h4 style="font-size: 1rem; font-weight: 600; color: var(--gray-700); margin-bottom: 1rem;">
+                    <i class="fas fa-users"></i> Active Sessions
+                </h4>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div style="width: 12px; height: 12px; background: var(--info-color); border-radius: 50%;"></div>
+                    <span style="color: var(--gray-600); font-size: 0.875rem;">3 Users Online</span>
+                </div>
+            </div>
+            
+            <div>
+                <h4 style="font-size: 1rem; font-weight: 600; color: var(--gray-700); margin-bottom: 1rem;">
+                    <i class="fas fa-clock"></i> System Uptime
+                </h4>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div style="width: 12px; height: 12px; background: var(--warning-color); border-radius: 50%;"></div>
+                    <span style="color: var(--gray-600); font-size: 0.875rem;">24h 15m</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Update current time
+function updateTime() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-IN', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+    document.getElementById('currentTime').textContent = timeString;
+}
+
+// System info modal
+function showSystemInfo() {
+    alert('System Information:\n\n' +
+          'Version: 2.0.0\n' +
+          'Database: PostgreSQL\n' +
+          'Server: Flask\n' +
+          'Last Backup: Today 2:00 AM\n' +
+          'Storage Used: 2.5GB / 10GB');
+}
+
+// Export data function
+function exportData() {
+    if (confirm('Export all system data to CSV format?')) {
+        // In a real application, this would trigger a download
+        alert('Data export initiated. You will receive a download link shortly.');
+    }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    updateTime();
+    setInterval(updateTime, 1000);
+    
+    // Animate cards on load
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.6s ease';
+        
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+});
+</script>
+{% endblock %}

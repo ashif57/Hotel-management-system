@@ -54,8 +54,6 @@ def login():
 
         if user and user.password == password:
             login_user(user)
-
-            # Directly redirect based on role (don't use /dashboard)
             if user.role == 'Admin':
                 return redirect(url_for('admin_dashboard'))
             elif user.role == 'Staff':
